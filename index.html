@@ -1,262 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>murda.lol - Enderisim</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-<style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-    font-family:'Orbitron', sans-serif;
-    background:#000;
-    color:#fff;
-    overflow-x:hidden;
-    scroll-behavior:smooth;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@enderisim | Bio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
 
-/* Canvas for snow background */
-#snowCanvas {
-    position:fixed;
-    top:0; left:0;
-    width:100%;
-    height:100%;
-    z-index:0;
-}
+    body {
+      background-color: #000;
+      color: #fff;
+      overflow: hidden;
+      height: 100vh;
+    }
 
-/* Header */
-header {
-    height:100vh;
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-    position:relative;
-    z-index:1;
-    padding:0 20px;
-}
+    /* Fullscreen banner */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: url('https://i.imgur.com/w9wVhNx.png') center/cover no-repeat;
+      transition: transform 0.8s ease, filter 0.8s ease;
+      z-index: 1;
+    }
 
-.glow-title {
-    font-size:80px;
-    color:#00f0ff;
-    text-transform:uppercase;
-    text-shadow:0 0 20px #00f0ff,0 0 50px #00f0ff;
-    animation: float 6s ease-in-out infinite, glitch 2s infinite;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:10px;
-    transition: transform 0.3s ease;
-}
+    header:hover {
+      transform: scale(1.05);
+      filter: brightness(1.2);
+    }
 
-.glow-title:hover {
-    transform: translateY(-10px);
-}
+    /* Overlay effect */
+    header::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2;
+    }
 
-.verified {
-    width:35px;
-    height:35px;
-    background:#00f0ff;
-    mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="white" d="M504 256c0 136.967-111.033 248-248 248S8 392.967 8 256 119.033 8 256 8s248 111.033 248 248zm-277 85l184-184-28.284-28.284L227 313l-74-74-28.284 28.284L227 341z"/></svg>') no-repeat center / contain;
-}
+    /* Main content box */
+    .content-box {
+      position: relative;
+      z-index: 3;
+      width: 90%;
+      max-width: 700px;
+      margin: auto;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      border-radius: 20px;
+      padding: 40px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      transition: all 0.3s ease;
+    }
 
-/* Buttons */
-.button-container {
-    display:flex;
-    gap:20px;
-    margin-top:20px;
-}
+    .content-box:hover {
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.7);
+      border-color: #fff;
+      transform: translateY(-50%) scale(1.02);
+    }
 
-header a.button {
-    display:inline-block;
-    padding:14px 35px;
-    background:#00f0ff;
-    color:#000;
-    text-decoration:none;
-    border-radius:8px;
-    transition:0.4s;
-    font-weight:bold;
-    box-shadow:0 0 20px rgba(0,240,255,0.4);
-}
+    h1 {
+      font-size: 2.8em;
+      font-weight: 700;
+      margin-bottom: 10px;
+      transition: 0.4s;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
 
-header a.button:hover {
-    background:#00c8ff;
-    box-shadow:0 0 40px #00c8ff,0 0 80px #00f0ff;
-    transform:scale(1.05);
-}
+    h1:hover {
+      text-shadow: 0 0 40px #fff;
+      transform: scale(1.05);
+    }
 
-header p {
-    font-size:18px;
-    color:#aaa;
-    max-width:600px;
-    margin:20px auto;
-    line-height:1.6;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
+    p {
+      font-size: 1.2em;
+      color: #ccc;
+      margin-top: 8px;
+      letter-spacing: 1px;
+    }
 
-header p:hover {
-    transform: translateY(-10px);
-    color:#00f0ff;
-}
+    .links {
+      margin-top: 25px;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 
-@keyframes float { 0%,100% { transform:translateY(0px);} 50% { transform:translateY(-15px);} }
-@keyframes glitch { 0%, 20%, 40%, 60%, 80%, 100% { text-shadow: 2px 0 #00f0ff, -2px 0 #00f0ff;} 10%,30%,50%,70%,90% { text-shadow: -2px 0 #00f0ff, 2px 0 #00f0ff;} }
+    a {
+      color: #fff;
+      text-decoration: none;
+      padding: 12px 25px;
+      border: 1px solid #fff;
+      border-radius: 30px;
+      transition: 0.3s;
+      box-shadow: 0 0 10px transparent;
+    }
 
-/* Sections */
-section { padding:100px 20px; max-width:1000px; margin:0 auto; position:relative; z-index:1; opacity:0; transform:translateY(50px); transition: all 1s ease-out; }
-section.visible { opacity:1; transform:translateY(0); }
+    a:hover {
+      background: #fff;
+      color: #000;
+      box-shadow: 0 0 25px #fff;
+      transform: scale(1.1);
+    }
 
-section h2 {
-    font-size:40px;
-    margin-bottom:50px;
-    color:#00f0ff;
-    text-align:center;
-    position:relative;
-    transition: transform 0.3s ease, color 0.3s ease;
-}
+    footer {
+      position: fixed;
+      bottom: 15px;
+      width: 100%;
+      text-align: center;
+      font-size: 0.9em;
+      color: #aaa;
+      z-index: 3;
+    }
 
-section h2::after { content:''; width:60px; height:3px; background:#00f0ff; display:block; margin:10px auto 0; border-radius:2px; box-shadow:0 0 15px #00f0ff; }
-
-section h2:hover { transform: translateY(-10px); color:#00f0ff; }
-
-.cards { display:flex; flex-wrap:wrap; gap:30px; justify-content:center; }
-.card { background: rgba(0,0,30,0.85); border-radius:15px; padding:25px; flex:1 1 250px; max-width:300px; box-shadow:0 0 20px rgba(0,240,255,0.2); transition:0.5s; backdrop-filter:blur(5px); }
-.card:hover { transform: translateY(-10px) scale(1.05); box-shadow:0 0 40px rgba(0,240,255,0.6),0 0 60px rgba(0,200,255,0.3); }
-
-.card h3, .card p {
-    transition: transform 0.3s ease, color 0.3s ease;
-}
-
-.card h3:hover, .card p:hover {
-    transform: translateY(-10px);
-    color:#00f0ff;
-}
-
-footer { text-align:center; padding:30px 20px; background:#000; color:#777; font-size:14px; position:relative; z-index:1; }
-a { color:#00f0ff; text-decoration:none;}
-a:hover { text-decoration:underline; }
-
-@media(max-width:768px){ .glow-title { font-size:60px; } .cards { flex-direction:column; align-items:center; } }
-</style>
+    /* Snow effect */
+    #snow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+  </style>
 </head>
 <body>
-<canvas id="snowCanvas"></canvas>
+  <canvas id="snow"></canvas>
+  <header></header>
 
-<header>
-    <div class="hero-content">
-        <div class="glow-title">
-            murda.lol
-            <div class="verified"></div>
-        </div>
-        <p>Hello! I'm <strong>@enderisim</strong> from the UK. I’m a FiveM developer, GFX artist, and digital creator. I run <a href="https://discord.gg/phantomleaks" target="_blank">discord.gg/phantomleaks</a> and love building smooth, futuristic projects online.</p>
-        <div class="button-container">
-            <a href="#about" class="button" id="learnMoreBtn">Learn More</a>
-            <a href="https://discord.gg/phantomleaks" target="_blank" class="button">Join Discord</a>
-        </div>
+  <div class="content-box">
+    <h1>@enderisim</h1>
+    <p>FiveM Developer • GFX Designer</p>
+
+    <div class="links">
+      <a href="https://discord.gg/phantomleaks" target="_blank">Join PhantomLeaks</a>
     </div>
-</header>
 
-<section id="about">
-    <h2>About Me</h2>
-    <p>Passionate about digital experiences, I specialize in custom FiveM servers, high-quality graphics, and building online communities. I love experimenting with new ideas, collaborating with creators, and bringing innovative projects to life.</p>
-</section>
+    <p style="margin-top:20px;">Discord: <strong>@enderisim</strong></p>
+  </div>
 
-<section id="skills">
-    <h2>What I Do</h2>
-    <div class="cards">
-        <div class="card">
-            <h3>FiveM Development</h3>
-            <p>Creating custom servers, scripts, and mods for immersive community gameplay experiences.</p>
-        </div>
-        <div class="card">
-            <h3>GFX & Digital Art</h3>
-            <p>Designing logos, banners, thumbnails, and other graphics for Discord servers, social media, and projects.</p>
-        </div>
-        <div class="card">
-            <h3>Community Management</h3>
-            <p>Running Discord communities, events, and collaborating with members on creative projects.</p>
-        </div>
-        <div class="card">
-            <h3>Collaboration</h3>
-            <p>Open to working with developers, creators, and other talented individuals on exciting projects.</p>
-        </div>
-    </div>
-</section>
+  <footer>© 2025 @enderisim</footer>
 
-<section id="contact">
-    <h2>Connect with Me</h2>
-    <p>Find me on Discord: <strong>@enderisim</strong> <br>
-    Join my server: <a href="https://discord.gg/phantomleaks" target="_blank">phantomleaks</a></p>
-</section>
+  <script>
+    // Snowfall effect
+    const canvas = document.getElementById("snow");
+    const ctx = canvas.getContext("2d");
+    let flakes = [];
 
-<footer>
-    &copy; 2025 murda.lol | Designed by Enderisim
-</footer>
-
-<script>
-// Background snow
-const canvas = document.getElementById('snowCanvas');
-const ctx = canvas.getContext('2d');
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
-
-const snowflakes = [];
-for(let i=0;i<150;i++){
-    snowflakes.push({x:Math.random()*width, y:Math.random()*height, r:Math.random()*3+1, d:Math.random()*1+1});
-}
-
-let cursorParticles=[];
-
-function animate() {
-    ctx.clearRect(0,0,width,height);
-    ctx.fillStyle='rgba(255,255,255,0.8)';
-    ctx.beginPath();
-    for(let i=0;i<snowflakes.length;i++){
-        let f = snowflakes[i];
-        ctx.moveTo(f.x,f.y);
-        ctx.arc(f.x,f.y,f.r,0,Math.PI*2,true);
-        f.y += f.d;
-        if(f.y>height) f.y=0;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     }
-    ctx.fill();
 
-    for(let i=cursorParticles.length-1;i>=0;i--){
-        let p = cursorParticles[i];
-        p.x += p.dx; p.y += p.dy; p.r *= 0.96;
-        ctx.beginPath();
-        ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
-        ctx.fillStyle='rgba(0,240,255,0.8)';
-        ctx.fill();
-        if(p.r<0.5) cursorParticles.splice(i,1);
+    window.addEventListener("resize", resize);
+    resize();
+
+    function createFlakes() {
+      for (let i = 0; i < 120; i++) {
+        flakes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 3 + 1,
+          speed: Math.random() * 1 + 0.5
+        });
+      }
     }
-    requestAnimationFrame(animate);
-}
-animate();
 
-window.addEventListener('resize',()=>{ width=canvas.width=window.innerWidth; height=canvas.height=window.innerHeight; });
-window.addEventListener('mousemove',(e)=>{
-    for(let i=0;i<3;i++){
-        cursorParticles.push({x:e.clientX, y:e.clientY, r:Math.random()*2+1, dx:(Math.random()-0.5)*1.5, dy:(Math.random()-0.5)*1.5});
+    function drawFlakes() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+      ctx.beginPath();
+      for (let flake of flakes) {
+        ctx.moveTo(flake.x, flake.y);
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+      }
+      ctx.fill();
+      moveFlakes();
     }
-});
 
-// Scroll animations
-const sections = document.querySelectorAll('section');
-window.addEventListener('scroll', ()=>{
-    const scrollY = window.scrollY + window.innerHeight*0.8;
-    sections.forEach(sec=>{
-        if(scrollY > sec.offsetTop){
-            sec.classList.add('visible');
+    function moveFlakes() {
+      for (let flake of flakes) {
+        flake.y += flake.speed;
+        if (flake.y > canvas.height) {
+          flake.y = 0;
+          flake.x = Math.random() * canvas.width;
         }
-    });
-});
+      }
+    }
 
-// Smooth scroll for Learn More
-document.getElementById('learnMoreBtn').addEventListener('click',(e)=>{
-    e.preventDefault();
-    document.querySelector('#about').scrollIntoView({behavior:'smooth'});
-});
-</script>
+    function update() {
+      drawFlakes();
+      requestAnimationFrame(update);
+    }
+
+    createFlakes();
+    update();
+  </script>
 </body>
 </html>
